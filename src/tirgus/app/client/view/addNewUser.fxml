@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefWidth="400" styleClass="container" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tirgus.app.client.AddNewUserController">
+    <stylesheets>
+        <URL value="@/tirgus/app/tirgus.css" />
+    </stylesheets>
+
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+
+    <Label text="Name" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+    <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Label text="Address" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+    <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Telephone" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+    <TextField fx:id="telField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="E-mail" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+    <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Separator GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+    <Label text="Login" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+    <TextField fx:id="loginField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+    <Label text="Password" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+    <PasswordField fx:id="passField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+    <Button onAction="#onRegister" text="Register" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+
+</GridPane>

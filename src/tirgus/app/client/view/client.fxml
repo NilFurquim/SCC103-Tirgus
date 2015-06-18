@@ -7,12 +7,12 @@
 <BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="tirgus.app.client.ClientController">
     <stylesheets>
-        <URL value="@../tirgus.css" />
+        <URL value="@/tirgus/app/tirgus.css" />
     </stylesheets>
 
     <top>
       <ToolBar>
-          <Button focusTraversable="false" mnemonicParsing="true" text="_Log in" />
+          <Button focusTraversable="false" mnemonicParsing="true" text="_Log in" onAction="#onLogin"/>
           <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddNewUser" text="_Add new user" />
       </ToolBar>
    </top>

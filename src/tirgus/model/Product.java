@@ -15,9 +15,16 @@ public class Product
 
     public Product(String name, double price, Period validity, String provider)
     {
+        this.name = new SimpleStringProperty();
         setName(name);
+
+        this.price = new SimpleDoubleProperty();
         setPrice(price);
+
+        this.validity = new SimpleObjectProperty<>();
         setValidity(validity);
+
+        this.provider = new SimpleStringProperty();
         setProvider(provider);
     }
 

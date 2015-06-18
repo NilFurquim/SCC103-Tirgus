@@ -4,14 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="tirgus.app.server.ServerController">
     <stylesheets>
-        <URL value="@../tirgus.css" />
+        <URL value="@/tirgus/app/tirgus.css" />
     </stylesheets>
 
     <top>
         <ToolBar>
-            <Button focusTraversable="false" mnemonicParsing="true" text="_New Product" />
+            <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddNewProduct" text="_New Product" />
             <Button focusTraversable="false" mnemonicParsing="true" text="_Add to Stock" />
         </ToolBar>
     </top>
@@ -19,12 +20,12 @@
     <center>
         <BorderPane>
             <top>
-                <BorderPane>
+                <BorderPane styleClass="container">
                     <center>
                         <TextField fx:id="searchField" />
                     </center>
                     <left>
-                        <Label labelFor="$searchField" mnemonicParsing="true" text="_Search" />
+                        <Label labelFor="$searchField" mnemonicParsing="true" text="_Search" BorderPane.alignment="CENTER_RIGHT" />
                     </left>
                 </BorderPane>
             </top>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<GridPane styleClass="container" prefWidth="400" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="tirgus.app.server.AddNewProduct">
+    <stylesheets>
+        <URL value="@/tirgus/app/tirgus.css" />
+    </stylesheets>
+
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+
+    <Label text="Name" GridPane.rowIndex="0" GridPane.halignment="RIGHT" />
+    <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Label text="Provider" GridPane.rowIndex="1" GridPane.halignment="RIGHT" />
+    <TextField fx:id="providerField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Price" GridPane.rowIndex="2" GridPane.halignment="RIGHT" />
+    <Spinner fx:id="priceSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Validity" GridPane.rowIndex="3" GridPane.halignment="RIGHT" />
+    <HBox spacing="5" GridPane.rowIndex="3" GridPane.columnIndex="1">
+        <Spinner fx:id="validityAmountSpinner" editable="false" />
+        <Spinner fx:id="validityUnitSpinner" editable="false" />
+    </HBox>
+
+
+    <Button mnemonicParsing="true" text="_Register"  GridPane.halignment="RIGHT"
+            GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#onRegister"/>
+
+</GridPane>

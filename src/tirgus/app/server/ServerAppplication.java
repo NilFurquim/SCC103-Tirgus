@@ -10,7 +10,7 @@ public class ServerAppplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("server.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/server.fxml"));
         primaryStage.setTitle("Tirgus Server");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
