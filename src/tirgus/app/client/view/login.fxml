@@ -6,7 +6,8 @@
 <?import javafx.scene.control.PasswordField?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
-<GridPane prefWidth="400" styleClass="container" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tirgus.app.client.Login">
+<GridPane prefWidth="400" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+          styleClass="container" fx:controller="tirgus.app.client.Login">
     <stylesheets>
         <URL value="@/tirgus/app/tirgus.css" />
     </stylesheets>

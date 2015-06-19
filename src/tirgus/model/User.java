@@ -2,7 +2,7 @@ package tirgus.model;
 
 import tirgus.security.Password;
 
-public class Client
+public class User
 {
     private String name;
     private String address;
@@ -11,7 +11,7 @@ public class Client
     private String login;
     private Password password;
 
-    public Client(String name, String address, String telephone, String email, String login, Password password)
+    public User(String name, String address, String telephone, String email, String login, Password password)
     {
         this.name = name;
         this.address = address;

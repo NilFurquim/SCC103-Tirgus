@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import tirgus.app.control.ProductsTable?>
 <BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="tirgus.app.client.ClientController">
     <stylesheets>
@@ -18,26 +19,7 @@
    </top>
 
    <center>
-       <BorderPane>
-           <top>
-               <BorderPane styleClass="container">
-                   <left>
-                       <Label mnemonicParsing="true" text="_Search" BorderPane.alignment="CENTER_RIGHT" />
-                   </left>
-                   <center>
-                       <TextField fx:id="searchField" focusTraversable="true" />
-                   </center>
-               </BorderPane>
-           </top>
-         <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-         </center>
-       </BorderPane>
+       <ProductsTable />
    </center>
 
     <bottom>

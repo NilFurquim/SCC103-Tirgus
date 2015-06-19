@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
+<?import tirgus.app.control.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -18,27 +19,7 @@
     </top>
 
     <center>
-        <BorderPane>
-            <top>
-                <BorderPane styleClass="container">
-                    <center>
-                        <TextField fx:id="searchField" />
-                    </center>
-                    <left>
-                        <Label labelFor="$searchField" mnemonicParsing="true" text="_Search" BorderPane.alignment="CENTER_RIGHT" />
-                    </left>
-                </BorderPane>
-            </top>
-
-            <center>
-                <TableView>
-                    <columns>
-                        <TableColumn text="C1" />
-                        <TableColumn text="C2" />
-                    </columns>
-                </TableView>
-            </center>
-        </BorderPane>
+        <ProductsTable />
     </center>
 
     <bottom>

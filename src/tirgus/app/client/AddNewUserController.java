@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import tirgus.model.Client;
+import tirgus.model.Market;
+import tirgus.model.User;
 import tirgus.security.Password;
 
 public class AddNewUserController
@@ -37,10 +38,13 @@ public class AddNewUserController
         final String login = loginField.getText();
         final Password password = new Password(passField.getText());
 
+        //TODO alert
+
         if(!(name.isEmpty() && login.isEmpty() && passField.getText().isEmpty()))
         {
-            new Client(name, address, tel, email, login, password);
+            Market.instance().newUser(new User(name, address, tel, email, login, password));
             ((Stage)loginField.getScene().getWindow()).close();
         }
+
     }
 }
