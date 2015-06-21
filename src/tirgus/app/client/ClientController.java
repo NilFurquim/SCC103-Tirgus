@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientController
+public class ClientController implements Initializable
 {
     @FXML
     private ProductsTable productsTable;
