@@ -4,10 +4,14 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import tirgus.serialization.OrderedSerializable;
 
 import java.time.Period;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-public class Product
+public class Product extends OrderedSerializable
 {
     private SimpleStringProperty name;
     private SimpleDoubleProperty price;
@@ -16,22 +20,24 @@ public class Product
     private SimpleStringProperty validityDescription;
     private SimpleStringProperty provider;
 
-    public Product(String name, double price, int quantity, Period validity, String provider)
+    public Product()
     {
         this.name = new SimpleStringProperty();
-        setName(name);
-
         this.price = new SimpleDoubleProperty();
-        setPrice(price);
-
         this.quantity = new SimpleIntegerProperty();
-        setQuantity(quantity);
-
         this.validity = new SimpleObjectProperty<>();
         this.validityDescription = new SimpleStringProperty();
-        setValidity(validity);
-
         this.provider = new SimpleStringProperty();
+    }
+
+    public Product(String name, double price, int quantity, Period validity, String provider)
+    {
+        this();
+
+        setName(name);
+        setPrice(price);
+        setQuantity(quantity);
+        setValidity(validity);
         setProvider(provider);
     }
 
@@ -151,5 +157,27 @@ public class Product
     public void setQuantity(int quantity)
     {
         this.quantity.set(quantity);
+    }
+
+    @Override
+    protected List<String> customOutputData()
+    {
+        return Arrays.asList(
+                getName(),
+                Double.toString(getPrice()),
+                Integer.toString(getQuantity()),
+                getValidity().toString(),
+                getProvider()
+        );
+    }
+
+    @Override
+    public void customInputData(Iterator<String> itr)
+    {
+        setName(itr.next());
+        setPrice(Double.valueOf(itr.next()));
+        setQuantity(Integer.valueOf(itr.next()));
+        setValidity(Period.parse(itr.next()));
+        setProvider(itr.next());
     }
 }

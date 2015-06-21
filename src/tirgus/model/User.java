@@ -1,8 +1,13 @@
 package tirgus.model;
 
 import tirgus.security.Password;
+import tirgus.serialization.OrderedSerializable;
 
-public class User
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class User extends OrderedSerializable
 {
     private String name;
     private String address;
@@ -10,6 +15,11 @@ public class User
     private String email;
     private String login;
     private Password password;
+
+    public User()
+    {
+
+    }
 
     public User(String name, String address, String telephone, String email, String login, Password password)
     {
@@ -49,5 +59,30 @@ public class User
     public Password getPassword()
     {
         return password;
+    }
+
+    @Override
+    protected List<String> customOutputData()
+    {
+        return Arrays.asList(
+                getName(),
+                getAddress(),
+                getTelephone(),
+                getEmail(),
+                getLogin(),
+                getPassword().getEncodedSalt(),
+                getPassword().getEncryptedPassword()
+        );
+    }
+
+    @Override
+    public void customInputData(Iterator<String> itr)
+    {
+        name = itr.next();
+        address = itr.next();
+        telephone = itr.next();
+        email = itr.next();
+        login = itr.next();
+        password = new Password(itr.next(), itr.next());
     }
 }

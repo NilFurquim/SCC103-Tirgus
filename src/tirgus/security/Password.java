@@ -11,23 +11,25 @@ public class Password
     private static final int saltSize = 16;
     private static final int digestTimes = 1009;
 
-    private String salt;
-    private String password;
+    private String encodedSalt;
+    private String encryptedPassword;
 
     public Password(String plainPassword)
     {
-        salt = generateSalt();
-        password = encrypt(plainPassword);
+        encodedSalt = generateSalt();
+        encryptedPassword = encrypt(plainPassword);
     }
 
-    public boolean matches(String plainPassword)
+    public Password(String encodedSalt, String encryptedPassword)
     {
-        return password.equals(encrypt(plainPassword));
+        this.encodedSalt = encodedSalt;
+        this.encryptedPassword = encryptedPassword;
     }
 
     private String encrypt(String plainPassword)
     {
-        byte[] passBytes = (salt + plainPassword).getBytes(Charset.forName("UTF-8"));
+        String decodedSalt = new String(Base64.getDecoder().decode(encodedSalt));
+        byte[] passBytes = (decodedSalt + plainPassword).getBytes(Charset.forName("UTF-8"));
         try
         {
             MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
@@ -52,12 +54,21 @@ public class Password
             byte[] saltBytes = new byte[saltSize];
             random.nextBytes(saltBytes);
             Base64.Encoder base64 = Base64.getEncoder();
-            base64.encode(saltBytes);
-            return new String(saltBytes);
+            return base64.encodeToString(saltBytes);
         }catch (NoSuchAlgorithmException ex)
         {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public String getEncodedSalt()
+    {
+        return encodedSalt;
+    }
+
+    public String getEncryptedPassword()
+    {
+        return encryptedPassword;
     }
 }

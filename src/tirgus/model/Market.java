@@ -9,13 +9,14 @@ public class Market
     private final ObservableList<User> users;
 
     private static Market _instance = null;
-    public static <T extends Market> Market makeMarket(Class<T> c) throws IllegalAccessException, InstantiationException
+
+    public static Market setInstance(Market market)
     {
         if(_instance != null)
             throw new RuntimeException("instance was already set");
         else
         {
-            _instance = c.newInstance();
+            _instance = market;
         }
 
         return _instance;

@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 import tirgus.model.Market;
 import tirgus.model.ServerMarket;
 
-public class ServerAppplication extends Application {
+import java.io.IOException;
+
+public class ServerApplication extends Application
+{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -19,9 +22,9 @@ public class ServerAppplication extends Application {
     }
 
 
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException
+    public static void main(String[] args) throws IOException
     {
-        Market.makeMarket(ServerMarket.class);
+        Market.setInstance(new ServerMarket(Integer.valueOf(args[0])));
         launch(args);
     }
 }

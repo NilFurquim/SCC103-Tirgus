@@ -31,6 +31,20 @@ public class CSVSerializer
         writer.flush();
     }
 
+    public static <T extends OrderedSerializable> String write(T object)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        write(object, stream);
+        try
+        {
+            return stream.toString("UTF-8");
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        return stream.toString();
+    }
+
     public static <T extends OrderedSerializable> T read(String line, Class<T> c) throws IllegalAccessException, InstantiationException
     {
         //read line and split by commas
@@ -51,7 +65,7 @@ public class CSVSerializer
             {
                 try
                 {
-                    items.add(CSVSerializer.read(line, c));
+                    items.add(read(line, c));
                 } catch (IllegalAccessException | InstantiationException e)
                 {
                     e.printStackTrace();
