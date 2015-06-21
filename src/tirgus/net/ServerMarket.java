@@ -14,8 +14,8 @@ import java.io.IOException;
 public class ServerMarket extends Market
 {
     private final ObservableList<User> users;
-    private TirgusServer server;
 
+    private TirgusServer server;
     public ServerMarket(int port) throws IOException
     {
         users = FXCollections.observableArrayList();
@@ -112,10 +112,13 @@ public class ServerMarket extends Market
         return false;
     }
 
-
     @Override
     public void stop()
     {
         server.stop();
+    }
+
+    public ObservableList<User> getUsers() {
+        return users;
     }
 }
