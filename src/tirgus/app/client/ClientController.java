@@ -72,6 +72,8 @@ public class ClientController implements Initializable
         });
 
         productsTable.getProductsTable().getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> buyButton.setDisable(newValue == null));
+                .addListener((observable, oldValue, newValue) ->
+                        buyButton.setDisable(newValue == null
+                                || ClientApplication.getMarket().getCurrentUser() == null));
     }
 }

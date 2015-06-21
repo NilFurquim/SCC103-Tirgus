@@ -69,7 +69,7 @@ public class ServerMarket extends Market
                 connection.sendMessage(new BooleanResponseMessage(false));
             } else
             {
-                connection.sendMessage(new ResponseMessage(users.get(0).getPassword().getEncodedSalt()));
+                connection.sendMessage(new ResponseMessage(filtered.get(0).getPassword().getEncodedSalt()));
             }
 
             return true;
