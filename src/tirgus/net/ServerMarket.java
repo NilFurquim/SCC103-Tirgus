@@ -121,4 +121,13 @@ public class ServerMarket extends Market
     public ObservableList<User> getUsers() {
         return users;
     }
+
+    public void addToStock(Product product, int addition)
+    {
+        product.setQuantity(product.getQuantity() + addition);
+        for (TirgusConnection connection : server.getConnections())
+        {
+            connection.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
+        }
+    }
 }

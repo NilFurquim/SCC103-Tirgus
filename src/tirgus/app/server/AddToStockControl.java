@@ -1,6 +1,5 @@
 package tirgus.app.server;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,8 +50,10 @@ public class AddToStockControl extends GridPane
 
     public void onDone(ActionEvent actionEvent)
     {
-        product.setQuantity(product.getQuantity() + additionSpinner.getValue());
-        ((Stage)productNameField.getScene().getWindow()).close();
+
+        ServerApplication.getMarket().addToStock(product, additionSpinner.getValue());
+
+        ((Stage) productNameField.getScene().getWindow()).close();
     }
 
 

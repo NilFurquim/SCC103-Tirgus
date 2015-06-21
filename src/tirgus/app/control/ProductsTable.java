@@ -73,4 +73,9 @@ public class ProductsTable extends BorderPane
     {
         return productsTable.getSelectionModel().getSelectedItem();
     }
+
+    public TableView<Product> getProductsTable()
+    {
+        return productsTable;
+    }
 }
