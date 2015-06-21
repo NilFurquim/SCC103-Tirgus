@@ -45,8 +45,6 @@ public class BuyProductControl extends GridPane
 
     public void onBuy(ActionEvent event)
     {
-        product.setQuantity(product.getQuantity() + qtdSpinner.getValue());
-
         if(ClientApplication.getMarket().buyProduct(product.getId(), qtdSpinner.getValue()))
         {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -57,9 +57,9 @@ public class ProductsTable extends BorderPane
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
         {
             Platform.runLater(() -> filteredList.setPredicate(product -> {
-                for (String part : newValue.split(" "))
+                for (String part : newValue.split("\\s"))
                 {
-                    if (product.getName().startsWith(part))
+                    if (product.getName().toLowerCase().contains(part.toLowerCase()))
                         return true;
                 }
 
