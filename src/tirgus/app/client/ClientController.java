@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,6 +19,9 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable
 {
+    @FXML
+    private Button buyButton;
+
     @FXML
     private Label userLabel;
 
@@ -71,5 +75,10 @@ public class ClientController implements Initializable
         ClientApplication.getMarket().currentUserProperty().addListener((observable, oldValue, newValue) -> {
             userLabel.setText(newValue != null ? newValue.getName() : "None");
         });
+
+        productsTable.getProductsTable().getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) ->
+                        buyButton.setDisable(newValue == null
+                                || ClientApplication.getMarket().getCurrentUser() == null));
     }
 }

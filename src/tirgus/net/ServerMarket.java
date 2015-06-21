@@ -69,7 +69,7 @@ public class ServerMarket extends Market
                 connection.sendMessage(new BooleanResponseMessage(false));
             } else
             {
-                connection.sendMessage(new ResponseMessage(users.get(0).getPassword().getEncodedSalt()));
+                connection.sendMessage(new ResponseMessage(filtered.get(0).getPassword().getEncodedSalt()));
             }
 
             return true;
@@ -120,5 +120,14 @@ public class ServerMarket extends Market
 
     public ObservableList<User> getUsers() {
         return users;
+    }
+
+    public void addToStock(Product product, int addition)
+    {
+        product.setQuantity(product.getQuantity() + addition);
+        for (TirgusConnection connection : server.getConnections())
+        {
+            connection.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
+        }
     }
 }

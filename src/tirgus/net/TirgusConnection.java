@@ -36,12 +36,12 @@ public class TirgusConnection implements Runnable
 
     public void newProductMessage(Product product)
     {
-        writer.println(new NewProductMessage(product));
+        sendMessage(new NewProductMessage(product));
     }
 
     public boolean newUserToServer(User user)
     {
-        writer.println(new NewUserMessage(user));
+        sendMessage(new NewUserMessage(user));
         BooleanResponseMessage response = (BooleanResponseMessage) waitForResponse();
         return response != null && response.successful();
     }
@@ -79,6 +79,7 @@ public class TirgusConnection implements Runnable
 
             Class<? extends TirgusMessage> c = TirgusMessageMapper.instance().getMap().findValue(identifier);
             TirgusMessage message = instantiateMessage(c, body);
+            System.err.println("received: " + message);
             if (message instanceof ResponseMessage)
             {
                 lastResponse = (ResponseMessage) message;
@@ -121,6 +122,7 @@ public class TirgusConnection implements Runnable
 
     public void sendMessage(TirgusMessage message)
     {
+        System.err.println("sent: " + message);
         writer.println(message);
     }
 }

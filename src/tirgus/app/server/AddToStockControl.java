@@ -53,13 +53,14 @@ public class AddToStockControl extends GridPane
 
     public void onDone(ActionEvent actionEvent)
     {
-        product.setQuantity(product.getQuantity() + additionSpinner.getValue());
+
+        ServerApplication.getMarket().addToStock(product, additionSpinner.getValue());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setTitle("Added to stock");
         alert.setHeaderText(additionSpinner.getValue() + " item(s) of " + product.getName() + " added successfully");
         alert.showAndWait();
-        ((Stage)productNameField.getScene().getWindow()).close();
+        ((Stage) productNameField.getScene().getWindow()).close();
     }
 
 

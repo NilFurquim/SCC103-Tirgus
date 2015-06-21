@@ -1,5 +1,7 @@
 package tirgus.net;
 
+import tirgus.app.server.ServerApplication;
+import tirgus.model.Product;
 import tirgus.net.message.TirgusMessageCallback;
 
 import java.io.IOException;
@@ -36,7 +38,12 @@ public class TirgusServer implements Runnable
             while (true)
             {
                 Socket socket = serverSocket.accept();
-                connections.add(new TirgusConnection(socket, messageCallback));
+                TirgusConnection connection = new TirgusConnection(socket, messageCallback);
+                connections.add(connection);
+                for (Product product : ServerApplication.getMarket().getProducts())
+                {
+                    connection.newProductMessage(product);
+                }
             }
         } catch (IOException ignored)
         {
