@@ -3,6 +3,9 @@ package tirgus.net;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import tirgus.app.server.ServerApplication;
 import tirgus.model.Market;
 import tirgus.model.Product;
 import tirgus.model.User;
@@ -10,6 +13,7 @@ import tirgus.net.message.*;
 import tirgus.serialization.CSVSerializer;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class ServerMarket extends Market
 {
@@ -128,6 +132,19 @@ public class ServerMarket extends Market
         for (TirgusConnection connection : server.getConnections())
         {
             connection.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
+        }
+    }
+
+    public void onCloseRequest()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Export to CSV");
+        alert.setHeaderText("Save your data");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get().equals(ButtonType.OK))
+        {
+            ServerApplication.closingExport("Products.csv", ServerApplication.getMarket().getProducts());
+            ServerApplication.closingExport("Users.csv", ServerApplication.getMarket().getUsers());
         }
     }
 }
