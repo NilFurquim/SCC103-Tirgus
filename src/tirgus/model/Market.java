@@ -8,7 +8,18 @@ public class Market
     private final ObservableList<Product> products;
     private final ObservableList<User> users;
 
-    private static final Market _instance = new Market();
+    private static Market _instance = null;
+    public static <T extends Market> Market makeMarket(Class<T> c) throws IllegalAccessException, InstantiationException
+    {
+        if(_instance != null)
+            throw new RuntimeException("instance was already set");
+        else
+        {
+            _instance = c.newInstance();
+        }
+
+        return _instance;
+    }
     public static Market instance()
     {
         return _instance;
@@ -24,7 +35,7 @@ public class Market
         users.add(user);
     }
 
-    private Market()
+    protected Market()
     {
         products = FXCollections.observableArrayList();
         users = FXCollections.observableArrayList();

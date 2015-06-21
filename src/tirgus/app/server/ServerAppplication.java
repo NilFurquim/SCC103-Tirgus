@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tirgus.model.Market;
+import tirgus.model.ServerMarket;
 
 public class ServerAppplication extends Application {
 
@@ -17,7 +19,9 @@ public class ServerAppplication extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException
+    {
+        Market.makeMarket(ServerMarket.class);
         launch(args);
     }
 }
