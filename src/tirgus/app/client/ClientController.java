@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientController implements Initializable
+public class ClientController
 {
     @FXML
     private ProductsTable productsTable;
@@ -35,6 +35,19 @@ public class ClientController implements Initializable
         Stage stage = new Stage();
         stage.setTitle("Login");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void onBuyProduct(ActionEvent actionEvent) throws IOException {
+        if(productsTable.getSelectedProduct() == null)
+        {
+            //TODO alert
+            return;
+        }
+        Stage stage = new Stage();
+        stage.setTitle("Buy product");
+        stage.setScene(new Scene(new BuyProductControl(productsTable.getSelectedProduct())));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
