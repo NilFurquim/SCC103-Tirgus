@@ -1,11 +1,12 @@
-package tirgus.model;
+package tirgus.net;
 
-import tirgus.net.TirgusConnection;
-import tirgus.net.TirgusServer;
+import tirgus.model.Market;
+import tirgus.model.Product;
 
 import java.io.IOException;
 
-public class ServerMarket extends Market {
+public class ServerMarket extends Market
+{
     private TirgusServer server;
 
     public ServerMarket(int port) throws IOException
@@ -21,5 +22,11 @@ public class ServerMarket extends Market {
         {
             connection.newProductMessage(product);
         }
+    }
+
+    @Override
+    public void stop()
+    {
+        server.stop();
     }
 }

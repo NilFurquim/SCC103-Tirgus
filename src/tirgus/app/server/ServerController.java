@@ -9,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tirgus.app.control.ProductsTable;
-import tirgus.app.server.AddToStockControl;
-import tirgus.model.Product;
 
 import java.io.IOException;
 
@@ -36,7 +34,7 @@ public class ServerController
     {
         if(productsTable.getSelectedProduct() == null)
         {
-            //TODO: Alertbox!!
+            //TODO: Alert
             return;
         }
         Stage stage = new Stage();

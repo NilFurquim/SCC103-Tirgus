@@ -8,15 +8,20 @@ import java.util.List;
 
 public class TirgusServer implements Runnable
 {
+    private ServerSocket serverSocket;
+    private Thread serverThread;
     private List<TirgusConnection> connections;
     private int port;
 
-    public TirgusServer(int port)
+    public TirgusServer(int port) throws IOException
     {
         connections = new ArrayList<>();
         this.port = port;
 
-        new Thread(this).start();
+        serverSocket = new ServerSocket(port);
+
+        serverThread = new Thread(this);
+        serverThread.start();
     }
 
     @Override
@@ -24,15 +29,29 @@ public class TirgusServer implements Runnable
     {
         try
         {
-            ServerSocket server = new ServerSocket(port);
             while (true)
             {
-                Socket socket = server.accept();
+                Socket socket = serverSocket.accept();
                 connections.add(new TirgusConnection(socket));
             }
+        } catch (IOException ignored)
+        {
+        }
+    }
+
+    public void stop()
+    {
+        serverThread.interrupt();
+        try
+        {
+            serverSocket.close();
         } catch (IOException e)
         {
             e.printStackTrace();
+        }
+        for (TirgusConnection connection : connections)
+        {
+            connection.stop();
         }
     }
 

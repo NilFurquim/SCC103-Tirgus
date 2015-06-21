@@ -12,22 +12,22 @@ import tirgus.security.Password;
 public class AddNewUserController
 {
     @FXML
-    TextField nameField;
+    private TextField nameField;
 
     @FXML
-    TextField addressField;
+    private TextField addressField;
 
     @FXML
-    TextField telField;
+    private TextField telField;
 
     @FXML
-    TextField emailField;
+    private TextField emailField;
 
     @FXML
-    TextField loginField;
+    private TextField loginField;
 
     @FXML
-    PasswordField passField;
+    private PasswordField passField;
 
     public void onRegister(ActionEvent actionEvent)
     {

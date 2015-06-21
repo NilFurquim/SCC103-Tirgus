@@ -3,7 +3,7 @@ package tirgus.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Market
+public abstract class Market
 {
     private final ObservableList<Product> products;
     private final ObservableList<User> users;
@@ -51,4 +51,6 @@ public class Market
     {
         return users;
     }
+
+    public abstract void stop();
 }

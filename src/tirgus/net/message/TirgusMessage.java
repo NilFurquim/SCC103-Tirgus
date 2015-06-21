@@ -1,23 +1,16 @@
-package tirgus.net;
-
-import java.lang.invoke.MethodHandles;
+package tirgus.net.message;
 
 public abstract class TirgusMessage
 {
     protected String body;
 
-    protected static String identifier;
-
-    static
-    {
-        identifier = null;
-    }
+    protected String identifier;
 
     public TirgusMessage(String body)
     {
+        identifier = TirgusMessageMapper.instance().getMap().findKey(getClass());
         this.body = body;
     }
-
 
     public String getBody()
     {
@@ -34,10 +27,8 @@ public abstract class TirgusMessage
         return identifier + " " + body;
     }
 
-    protected static void setIdentifier(String identifier)
+    public String getIdentifier()
     {
-        TirgusMessage.identifier = identifier;
-        TirgusMessageMapper.instance().getMap().put(identifier,
-                MethodHandles.lookup().lookupClass());
+        return identifier;
     }
 }

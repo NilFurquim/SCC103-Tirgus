@@ -45,14 +45,21 @@ public class CSVSerializer
         return stream.toString();
     }
 
-    public static <T extends OrderedSerializable> T read(String line, Class<T> c) throws IllegalAccessException, InstantiationException
+    public static <T extends OrderedSerializable> T read(String line, Class<T> c)
     {
         //read line and split by commas
         String[] data = line.split(",\\s");
 
         //return instance of object
-        T object = c.newInstance();
-        object.inputData(Arrays.asList(data));
+        T object = null;
+        try
+        {
+            object = c.newInstance();
+            object.inputData(Arrays.asList(data));
+        } catch (InstantiationException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
         return object;
     }
 
@@ -61,16 +68,7 @@ public class CSVSerializer
         List<T> items = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream)))
         {
-            reader.lines().forEach(line ->
-            {
-                try
-                {
-                    items.add(read(line, c));
-                } catch (IllegalAccessException | InstantiationException e)
-                {
-                    e.printStackTrace();
-                }
-            });
+            reader.lines().forEach(line -> items.add(read(line, c)));
         }
         return items;
     }
