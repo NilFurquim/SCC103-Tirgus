@@ -6,13 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import tirgus.model.Market;
 import tirgus.net.ServerMarket;
 
 import java.io.IOException;
 
 public class ServerApplication extends Application
 {
+    private static ServerMarket market;
+
+    public static ServerMarket getMarket()
+    {
+        return market;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,6 +27,15 @@ public class ServerApplication extends Application
         primaryStage.show();
     }
 
+    public static void main(String[] args) throws IOException
+    {
+        final int port = Integer.valueOf(args[0]);
+
+        //set market type
+        market = new ServerMarket(port);
+        launch(args);
+    }
+
     @Override
     public void stop() throws Exception
     {
@@ -29,13 +43,7 @@ public class ServerApplication extends Application
         alert.setTitle("Export to CSV");
         alert.setHeaderText("Save your data");
         alert.showAndWait();
-        Market.instance().stop();
+        market.stop();
         super.stop();
-    }
-
-    public static void main(String[] args) throws IOException
-    {
-        Market.setInstance(new ServerMarket(Integer.valueOf(args[0])));
-        launch(args);
     }
 }

@@ -5,12 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tirgus.model.Market;
 import tirgus.net.ClientMarket;
 
 import java.io.IOException;
 
 public class ClientApplication extends Application {
+
+    private static ClientMarket market;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -20,13 +21,18 @@ public class ClientApplication extends Application {
         primaryStage.show();
     }
 
+    public static ClientMarket getMarket()
+    {
+        return market;
+    }
 
     public static void main(String[] args) throws IOException
     {
         final String host = args[0];
         final int port = Integer.valueOf(args[1]);
-        Market.setInstance(new ClientMarket(host, port));
 
+        //set market type
+        market = new ClientMarket(host, port);
         launch(args);
     }
 }

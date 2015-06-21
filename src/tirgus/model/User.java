@@ -83,6 +83,6 @@ public class User extends OrderedSerializable
         telephone = itr.next();
         email = itr.next();
         login = itr.next();
-        password = new Password(itr.next(), itr.next());
+        password = new Password(itr.next(), itr.next(), true);
     }
 }

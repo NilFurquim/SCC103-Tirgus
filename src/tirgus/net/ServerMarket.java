@@ -2,12 +2,12 @@ package tirgus.net;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import tirgus.model.Market;
 import tirgus.model.Product;
 import tirgus.model.User;
-import tirgus.net.message.NewProductMessage;
-import tirgus.net.message.NewUserMessage;
-import tirgus.net.message.TirgusMessage;
+import tirgus.net.message.*;
+import tirgus.serialization.CSVSerializer;
 
 import java.io.IOException;
 
@@ -23,16 +23,17 @@ public class ServerMarket extends Market
     }
 
     @Override
-    public void newProduct(Product product)
+    public boolean newProduct(Product product)
     {
         super.newProduct(product);
         for (TirgusConnection connection : server.getConnections())
         {
             connection.newProductMessage(product);
         }
+
+        return false;
     }
 
-    @Override
     public boolean newUser(User user)
     {
         boolean alreadyExists = users.stream().anyMatch(user1 -> user1.getLogin().equals(user.getLogin()));
@@ -50,13 +51,42 @@ public class ServerMarket extends Market
         if (message instanceof NewUserMessage)
         {
             NewUserMessage m = (NewUserMessage) message;
-            boolean success = Market.instance().newUser(m.getUser());
-            connection.sendResponse(success);
-            return success;
+            boolean success = newUser(m.getUser());
+            connection.sendMessage(new BooleanResponseMessage(success));
+            return true;
         } else if (message instanceof NewProductMessage)
         {
             NewProductMessage m = (NewProductMessage) message;
-            Market.instance().newProduct(m.getProduct());
+            boolean success = newProduct(m.getProduct());
+            connection.sendMessage(new BooleanResponseMessage(success));
+            return true;
+        } else if (message instanceof RequestSaltMessage)
+        {
+            RequestSaltMessage m = (RequestSaltMessage) message;
+            FilteredList<User> filtered = users.filtered(user -> user.getLogin().equals(m.getUsername()));
+            if (filtered.isEmpty())
+            {
+                connection.sendMessage(new BooleanResponseMessage(false));
+            } else
+            {
+                connection.sendMessage(new ResponseMessage(users.get(0).getPassword().getEncodedSalt()));
+            }
+
+            return true;
+        } else if (message instanceof LoginMessage)
+        {
+            LoginMessage m = (LoginMessage) message;
+            FilteredList<User> list = users.filtered(user ->
+                    user.getLogin().equals(m.getLogin())
+                            && user.getPassword().getEncryptedPassword().equals(m.getEncryptedPassword()));
+            if (list.isEmpty())
+            {
+                connection.sendMessage(new BooleanResponseMessage(false));
+            } else
+            {
+                connection.sendMessage(new ResponseMessage(CSVSerializer.write(list.get(0))));
+            }
+
             return true;
         }
 

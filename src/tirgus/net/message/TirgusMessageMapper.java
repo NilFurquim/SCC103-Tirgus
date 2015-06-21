@@ -12,8 +12,11 @@ public class TirgusMessageMapper
     {
         Map<String, Class<? extends TirgusMessage>> map = instance().getMap();
         map.put("response", ResponseMessage.class);
+        map.put("bool-response", BooleanResponseMessage.class);
         map.put("new-product", NewProductMessage.class);
         map.put("new-user", NewUserMessage.class);
+        map.put("request-salt", RequestSaltMessage.class);
+        map.put("login", LoginMessage.class);
     }
 
     public static TirgusMessageMapper instance()

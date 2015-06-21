@@ -1,16 +1,23 @@
 package tirgus.app.client;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tirgus.app.control.ProductsTable;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ClientController
+public class ClientController implements Initializable
 {
+    @FXML
+    private ProductsTable productsTable;
 
     public void onAddNewUser(ActionEvent actionEvent) throws IOException
     {
@@ -30,5 +37,11 @@ public class ClientController
         stage.setScene(new Scene(root));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        productsTable.initData(ClientApplication.getMarket());
     }
 }

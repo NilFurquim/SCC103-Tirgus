@@ -8,7 +8,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import tirgus.model.Market;
 import tirgus.model.Product;
 
 import java.net.URL;
@@ -75,7 +74,7 @@ public class AddNewProduct implements Initializable
                 validity = Period.ofDays(0);
         }
 
-        Market.instance().newProduct(new Product(name, price, quantity, validity, provider));
+        ServerApplication.getMarket().newProduct(new Product(name, price, quantity, validity, provider));
 
         //TODO alert
 

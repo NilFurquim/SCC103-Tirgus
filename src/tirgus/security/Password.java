@@ -17,16 +17,22 @@ public class Password
     public Password(String plainPassword)
     {
         encodedSalt = generateSalt();
-        encryptedPassword = encrypt(plainPassword);
+        encryptedPassword = encrypt(encodedSalt, plainPassword);
     }
 
-    public Password(String encodedSalt, String encryptedPassword)
+    public Password(String encodedSalt, String password, boolean encrypted)
     {
         this.encodedSalt = encodedSalt;
-        this.encryptedPassword = encryptedPassword;
+        if (encrypted)
+        {
+            this.encryptedPassword = password;
+        } else
+        {
+            this.encryptedPassword = encrypt(encodedSalt, password);
+        }
     }
 
-    private String encrypt(String plainPassword)
+    public static String encrypt(String encodedSalt, String plainPassword)
     {
         String decodedSalt = new String(Base64.getDecoder().decode(encodedSalt));
         byte[] passBytes = (decodedSalt + plainPassword).getBytes(Charset.forName("UTF-8"));
@@ -46,7 +52,7 @@ public class Password
         return new String(encoder.encode(passBytes));
     }
 
-    private static String generateSalt()
+    public static String generateSalt()
     {
         try
         {

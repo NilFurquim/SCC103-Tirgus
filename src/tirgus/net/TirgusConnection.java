@@ -42,7 +42,7 @@ public class TirgusConnection implements Runnable
     public boolean newUserToServer(User user)
     {
         writer.println(new NewUserMessage(user));
-        ResponseMessage response = waitForResponse();
+        BooleanResponseMessage response = (BooleanResponseMessage) waitForResponse();
         return response != null && response.successful();
     }
 
@@ -67,11 +67,6 @@ public class TirgusConnection implements Runnable
         lastResponse = null;
 
         return response;
-    }
-
-    public void sendResponse(boolean success)
-    {
-        writer.println(new ResponseMessage(success));
     }
 
     @Override
@@ -122,6 +117,11 @@ public class TirgusConnection implements Runnable
         {
             e.printStackTrace();
         }
+    }
+
+    public void sendMessage(TirgusMessage message)
+    {
+        writer.println(message);
     }
 }
 

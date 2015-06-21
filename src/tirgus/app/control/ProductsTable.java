@@ -49,8 +49,11 @@ public class ProductsTable extends BorderPane
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         providerCol.setCellValueFactory(new PropertyValueFactory<>("provider"));
         validityCol.setCellValueFactory(new PropertyValueFactory<>("validityDescription"));
+    }
 
-        FilteredList<Product> filteredList = new FilteredList<>(Market.instance().getProducts());
+    public void initData(Market market)
+    {
+        FilteredList<Product> filteredList = new FilteredList<>(market.getProducts());
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
         {
             Platform.runLater(() -> filteredList.setPredicate(product -> {
