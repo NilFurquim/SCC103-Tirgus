@@ -4,10 +4,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tirgus.model.Product;
 
@@ -52,6 +54,11 @@ public class AddToStockControl extends GridPane
     public void onDone(ActionEvent actionEvent)
     {
         product.setQuantity(product.getQuantity() + additionSpinner.getValue());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setTitle("Added to stock");
+        alert.setHeaderText(additionSpinner.getValue() + " item(s) of " + product.getName() + " added successfully");
+        alert.showAndWait();
         ((Stage)productNameField.getScene().getWindow()).close();
     }
 

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,7 +38,11 @@ public class ServerController implements Initializable
     {
         if(productsTable.getSelectedProduct() == null)
         {
-            //TODO: Alert
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("Information");
+            alert.setHeaderText("Select a product");
+            alert.showAndWait();
             return;
         }
         Stage stage = new Stage();

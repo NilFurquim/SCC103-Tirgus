@@ -39,8 +39,6 @@ public class AddNewUserController
         final String login = loginField.getText();
         final Password password = new Password(passField.getText());
 
-        //TODO alert
-
         if(!(name.isEmpty() && login.isEmpty() && passField.getText().isEmpty()))
         {
             boolean successful =

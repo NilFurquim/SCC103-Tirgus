@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,7 +49,11 @@ public class ClientController implements Initializable
 
         if (productsTable.getSelectedProduct() == null)
         {
-            //TODO alert
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("Information");
+            alert.setHeaderText("Select a product");
+            alert.showAndWait();
             return;
         }
 

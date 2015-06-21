@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tirgus.model.Product;
 
@@ -73,10 +75,14 @@ public class AddNewProduct implements Initializable
             default:
                 validity = Period.ofDays(0);
         }
+        Product product = new Product(name, price, quantity, validity, provider);
+        ServerApplication.getMarket().newProduct(product);
 
-        ServerApplication.getMarket().newProduct(new Product(name, price, quantity, validity, provider));
-
-        //TODO alert
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setTitle("Product registered");
+        alert.setHeaderText(product.getName() + " successfully added");
+        alert.showAndWait();
 
         ((Stage) nameField.getScene().getWindow()).close();
     }
