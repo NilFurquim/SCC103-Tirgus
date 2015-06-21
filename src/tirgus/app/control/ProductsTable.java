@@ -65,4 +65,9 @@ public class ProductsTable extends BorderPane
         });
         productsTable.setItems(filteredList);
     }
+
+    public Product getSelectedProduct()
+    {
+        return productsTable.getSelectionModel().getSelectedItem();
+    }
 }

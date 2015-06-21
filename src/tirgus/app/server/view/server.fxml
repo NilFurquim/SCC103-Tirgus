@@ -14,12 +14,12 @@
     <top>
         <ToolBar>
             <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddNewProduct" text="_New Product" />
-            <Button focusTraversable="false" mnemonicParsing="true" text="_Add to Stock" />
+            <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddToStock" text="_Add to Stock" />
         </ToolBar>
     </top>
 
     <center>
-        <ProductsTable />
+        <ProductsTable fx:id="productsTable"/>
     </center>
 
     <bottom>
