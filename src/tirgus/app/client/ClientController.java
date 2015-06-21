@@ -1,16 +1,20 @@
 package tirgus.app.client;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tirgus.app.control.ProductsTable;
 
 import java.io.IOException;
 
 public class ClientController
 {
+    @FXML
+    public ProductsTable productsTable;
 
     public void onAddNewUser(ActionEvent actionEvent) throws IOException
     {
@@ -28,6 +32,19 @@ public class ClientController
         Stage stage = new Stage();
         stage.setTitle("Login");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void onBuyProduct(ActionEvent actionEvent) throws IOException {
+        if(productsTable.getSelectedProduct() == null)
+        {
+            //TODO alert
+            return;
+        }
+        Stage stage = new Stage();
+        stage.setTitle("Buy product");
+        stage.setScene(new Scene(new BuyProductControl(productsTable.getSelectedProduct())));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }

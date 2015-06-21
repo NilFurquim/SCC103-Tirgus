@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<fx:root type="GridPane" styleClass="container" prefWidth="400" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/tirgus/app/tirgus.css" />
+    </stylesheets>
+
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+
+    <Label text="Product Name" GridPane.rowIndex="0" GridPane.halignment="RIGHT" />
+    <TextField fx:id="productNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false"/>
+
+    <Label text="Current Quantity" GridPane.rowIndex="1" GridPane.halignment="RIGHT" />
+    <TextField fx:id="currentField" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+
+    <Label text="Price" GridPane.rowIndex="2" GridPane.halignment="RIGHT" />
+    <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"/>
+
+    <Label text="Buy" GridPane.rowIndex="3" GridPane.halignment="RIGHT" />
+    <Spinner fx:id="buySpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Button mnemonicParsing="true" text="_Done"  GridPane.halignment="RIGHT"
+            GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#onBuy"/>
+</fx:root>

@@ -15,11 +15,12 @@
       <ToolBar>
           <Button focusTraversable="false" mnemonicParsing="true" text="_Log in" onAction="#onLogin"/>
           <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddNewUser" text="_Add new user" />
+          <Button focusTraversable="false" mnemonicParsing="true" onAction="#onBuyProduct" text="_Buy product" />
       </ToolBar>
    </top>
 
    <center>
-       <ProductsTable />
+       <ProductsTable fx:id="productsTable"/>
    </center>
 
     <bottom>
