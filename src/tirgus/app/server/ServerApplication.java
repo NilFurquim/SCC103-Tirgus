@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import tirgus.model.Product;
 import tirgus.model.User;
@@ -18,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class ServerApplication extends Application
@@ -30,7 +27,7 @@ public class ServerApplication extends Application
         return market;
     }
 
-    private static <T extends OrderedSerializable> void closingExport(String filename, List<T> list)
+    public static <T extends OrderedSerializable> void closingExport(String filename, List<T> list)
     {
         try {
             FileOutputStream fw = new FileOutputStream(filename);
@@ -45,7 +42,7 @@ public class ServerApplication extends Application
         }
     }
 
-    private static <T extends OrderedSerializable> void initialImport(String filename, Class<T> c, Consumer<List<T>> consumer)
+    public static <T extends OrderedSerializable> void initialImport(String filename, Class<T> c, Consumer<List<T>> consumer)
     {
         File file = new File(filename);
         if(file.exists())
@@ -84,15 +81,6 @@ public class ServerApplication extends Application
     @Override
     public void stop() throws Exception
     {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Export to CSV");
-        alert.setHeaderText("Save your data");
-        Optional<ButtonType> result =  alert.showAndWait();
-        if(result.isPresent() && result.get().equals(ButtonType.OK))
-        {
-            closingExport("Products.csv", market.getProducts());
-            closingExport("Users.csv", market.getUsers());
-        }
         market.stop();
         super.stop();
     }
