@@ -4,10 +4,14 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import tirgus.serialization.OrderedSerializable;
 
 import java.time.Period;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-public class Product
+public class Product implements OrderedSerializable
 {
     private SimpleStringProperty name;
     private SimpleDoubleProperty price;
@@ -151,5 +155,26 @@ public class Product
     public void setQuantity(int quantity)
     {
         this.quantity.set(quantity);
+    }
+
+    @Override
+    public List<String> outputData() {
+        return Arrays.asList(
+                getName(),
+                Double.toString(getPrice()),
+                Integer.toString(getQuantity()),
+                getValidity().toString(),
+                getProvider());
+    }
+
+    @Override
+    public void inputData(List<String> list) {
+        Iterator<String> itr = list.iterator();
+
+        setName(itr.next());
+        setPrice(Double.parseDouble(itr.next()));
+        setQuantity(Integer.parseInt(itr.next()));
+        setValidity(Period.parse(itr.next()));
+        setProvider(itr.next());
     }
 }
