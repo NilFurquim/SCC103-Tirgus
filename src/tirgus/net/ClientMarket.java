@@ -3,6 +3,7 @@ package tirgus.net;
 import javafx.beans.property.SimpleObjectProperty;
 import tirgus.app.client.ClientApplication;
 import tirgus.model.Market;
+import tirgus.model.Product;
 import tirgus.model.User;
 import tirgus.net.message.*;
 import tirgus.serialization.CSVSerializer;
@@ -27,6 +28,14 @@ public class ClientMarket extends Market
         {
             NewProductMessage m = (NewProductMessage) message;
             ClientApplication.getMarket().newProduct(m.getProduct());
+            return true;
+        } else if (message instanceof QuantityMessage)
+        {
+            QuantityMessage m = (QuantityMessage) message;
+            Product product =
+                    ClientApplication.getMarket().getProducts()
+                            .filtered(p -> p.getId() == m.getProductId()).get(0);
+            product.setQuantity(m.getNewQuantity());
             return true;
         }
 
@@ -82,5 +91,12 @@ public class ClientMarket extends Market
     public void setCurrentUser(User currentUser)
     {
         this.currentUser.set(currentUser);
+    }
+
+    public boolean buyProduct(int productId, int quantity)
+    {
+        connection.sendMessage(new BuyMessage(productId, quantity));
+        BooleanResponseMessage response = (BooleanResponseMessage) connection.waitForResponse();
+        return response != null && response.successful();
     }
 }

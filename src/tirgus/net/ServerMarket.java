@@ -88,6 +88,25 @@ public class ServerMarket extends Market
             }
 
             return true;
+        } else if (message instanceof BuyMessage)
+        {
+            BuyMessage m = (BuyMessage) message;
+            Product product = getProducts().filtered(p -> p.getId() == m.getProductId()).get(0);
+            if (product.getQuantity() >= m.getQuantity())
+            {
+                product.setQuantity(product.getQuantity() - m.getQuantity());
+                connection.sendMessage(new BooleanResponseMessage(true));
+
+                for (TirgusConnection conn : server.getConnections())
+                {
+                    conn.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
+                }
+            } else
+            {
+                connection.sendMessage(new BooleanResponseMessage(false));
+            }
+
+            return true;
         }
 
         return false;

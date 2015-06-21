@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tirgus.app.control.ProductsTable;
@@ -16,6 +17,9 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable
 {
+    @FXML
+    private Label userLabel;
+
     @FXML
     private ProductsTable productsTable;
 
@@ -39,12 +43,15 @@ public class ClientController implements Initializable
         stage.show();
     }
 
-    public void onBuyProduct(ActionEvent actionEvent) throws IOException {
-        if(productsTable.getSelectedProduct() == null)
+    public void onBuyProduct(ActionEvent actionEvent) throws IOException
+    {
+
+        if (productsTable.getSelectedProduct() == null)
         {
             //TODO alert
             return;
         }
+
         Stage stage = new Stage();
         stage.setTitle("Buy product");
         stage.setScene(new Scene(new BuyProductControl(productsTable.getSelectedProduct())));
@@ -56,5 +63,8 @@ public class ClientController implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         productsTable.initData(ClientApplication.getMarket());
+        ClientApplication.getMarket().currentUserProperty().addListener((observable, oldValue, newValue) -> {
+            userLabel.setText(newValue != null ? newValue.getName() : "None");
+        });
     }
 }

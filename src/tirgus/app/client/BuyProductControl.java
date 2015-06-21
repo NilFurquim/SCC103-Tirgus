@@ -21,10 +21,14 @@ public class BuyProductControl extends GridPane
     @FXML
     public TextField priceField;
     @FXML
-    public Spinner buySpinner;
+    public Spinner<Integer> qtdSpinner;
+
+    private Product product;
 
     public BuyProductControl(Product product) throws IOException
     {
+        this.product = product;
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/buyProduct.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -34,12 +38,13 @@ public class BuyProductControl extends GridPane
         currentField.setText(String.valueOf(product.getQuantity()));
         priceField.setText(String.valueOf(product.getPrice()));
 
-        buySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
+        qtdSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
     }
 
     public void onBuy(ActionEvent event)
     {
-        ((Stage)productNameField.getScene().getWindow()).close();
+        ClientApplication.getMarket().buyProduct(product.getId(), qtdSpinner.getValue());
+        ((Stage) productNameField.getScene().getWindow()).close();
     }
 
 

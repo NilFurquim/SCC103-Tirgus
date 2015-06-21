@@ -17,6 +17,8 @@ public class TirgusMessageMapper
         map.put("new-user", NewUserMessage.class);
         map.put("request-salt", RequestSaltMessage.class);
         map.put("login", LoginMessage.class);
+        map.put("buy", BuyMessage.class);
+        map.put("quantity", QuantityMessage.class);
     }
 
     public static TirgusMessageMapper instance()
