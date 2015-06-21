@@ -1,6 +1,5 @@
 package tirgus.net;
 
-import tirgus.model.Market;
 import tirgus.model.Product;
 import tirgus.model.User;
 import tirgus.net.message.*;
@@ -18,12 +17,18 @@ public class TirgusConnection implements Runnable
     private Socket socket;
     private Scanner scanner;
     private PrintWriter writer;
+    private TirgusMessageCallback messageCallback;
 
-    public TirgusConnection(Socket socket) throws IOException
+    //TODO some queue and response ID for a multiple responses case
+    private ResponseMessage lastResponse;
+
+    public TirgusConnection(Socket socket, TirgusMessageCallback messageCallback) throws IOException
     {
         this.socket = socket;
         this.writer = new PrintWriter(socket.getOutputStream(), true);
         this.scanner = new Scanner(socket.getInputStream());
+        this.lastResponse = null;
+        this.messageCallback = messageCallback;
 
         inputThread = new Thread(this);
         inputThread.start();
@@ -34,16 +39,62 @@ public class TirgusConnection implements Runnable
         writer.println(new NewProductMessage(product));
     }
 
-    public boolean newUserMessage(User user)
+    public boolean newUserToServer(User user)
     {
         writer.println(new NewUserMessage(user));
-//        waitForResponse();
-        return false;
+        ResponseMessage response = waitForResponse();
+        return response != null && response.successful();
     }
 
     public ResponseMessage waitForResponse()
     {
-        return null;
+        final int timeout = 1000;
+        final int step = 50;
+        int timePast = 0;
+        while (lastResponse == null && timePast < timeout)
+        {
+            try
+            {
+                Thread.sleep(step);
+                timePast += step;
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        ResponseMessage response = lastResponse;
+        lastResponse = null;
+
+        return response;
+    }
+
+    public void sendResponse(boolean success)
+    {
+        writer.println(new ResponseMessage(success));
+    }
+
+    @Override
+    public void run()
+    {
+        while (scanner.hasNext())
+        {
+            final String identifier = scanner.next();
+            final String body = scanner.nextLine().trim();
+
+            Class<? extends TirgusMessage> c = TirgusMessageMapper.instance().getMap().findValue(identifier);
+            TirgusMessage message = instantiateMessage(c, body);
+            if (message instanceof ResponseMessage)
+            {
+                lastResponse = (ResponseMessage) message;
+            } else
+            {
+                if (!messageCallback.callback(this, message))
+                {
+                    System.err.println("unhandled message: " + message);
+                }
+            }
+        }
     }
 
     private TirgusMessage instantiateMessage(Class<? extends TirgusMessage> c, String body)
@@ -57,36 +108,6 @@ public class TirgusConnection implements Runnable
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public void run()
-    {
-        while (scanner.hasNext())
-        {
-            final String identifier = scanner.next();
-            final String body = scanner.nextLine().trim();
-
-            Class<? extends TirgusMessage> c = TirgusMessageMapper.instance().getMap().findValue(identifier);
-            loopCallback(instantiateMessage(c, body));
-        }
-    }
-
-    private void loopCallback(TirgusMessage message)
-    {
-
-        if (message instanceof ResponseMessage)
-        {
-            //TODO response system
-        } else if (message instanceof NewUserMessage)
-        {
-            NewUserMessage m = (NewUserMessage) message;
-            Market.instance().newUser(m.getUser());
-        } else if (message instanceof NewProductMessage)
-        {
-            NewProductMessage m = (NewProductMessage) message;
-            Market.instance().newProduct(m.getProduct());
-        }
     }
 
     public void stop()

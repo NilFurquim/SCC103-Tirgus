@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 public abstract class Market
 {
     private final ObservableList<Product> products;
-    private final ObservableList<User> users;
 
     private static Market _instance = null;
 
@@ -31,15 +30,14 @@ public abstract class Market
         products.add(product);
     }
 
-    public void newUser(User user)
+    public boolean newUser(User user)
     {
-        users.add(user);
+        return true;
     }
 
     protected Market()
     {
         products = FXCollections.observableArrayList();
-        users = FXCollections.observableArrayList();
     }
 
     public ObservableList<Product> getProducts()
@@ -47,10 +45,6 @@ public abstract class Market
         return products;
     }
 
-    public ObservableList<User> getUsers()
-    {
-        return users;
-    }
 
     public abstract void stop();
 }

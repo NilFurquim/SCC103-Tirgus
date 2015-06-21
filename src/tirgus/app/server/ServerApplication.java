@@ -28,7 +28,6 @@ public class ServerApplication extends Application
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Export to CSV");
         alert.setHeaderText("Save your data");
-//        alert.setContentText("Save your data");
         alert.showAndWait();
         Market.instance().stop();
         super.stop();

@@ -1,12 +1,13 @@
 package tirgus.net;
 
 import tirgus.model.Market;
-import tirgus.model.Product;
 import tirgus.model.User;
+import tirgus.net.message.NewProductMessage;
+import tirgus.net.message.NewUserMessage;
+import tirgus.net.message.TirgusMessage;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.time.Period;
 
 public class ClientMarket extends Market
 {
@@ -15,17 +16,36 @@ public class ClientMarket extends Market
 
     public ClientMarket(String host, int port) throws IOException
     {
-        connection = new TirgusConnection(new Socket(host, port));
+        connection = new TirgusConnection(new Socket(host, port), this::clientMessageCallback);
+    }
 
-//        newUser(new User("name", "address", "telephone", "email", "login", new Password("password")));
-        newProduct(new Product("name", 1.99, 3, Period.ofDays(53), "provider"));
+    private boolean clientMessageCallback(TirgusConnection connection, TirgusMessage message)
+    {
+        if (message instanceof NewUserMessage)
+        {
+            NewUserMessage m = (NewUserMessage) message;
+            Market.instance().newUser(m.getUser());
+            return true;
+        } else if (message instanceof NewProductMessage)
+        {
+            NewProductMessage m = (NewProductMessage) message;
+            Market.instance().newProduct(m.getProduct());
+            return true;
+        }
+
+        return false;
     }
 
     @Override
-    public void newUser(User user)
+    public boolean newUser(User user)
     {
-        connection.newUserMessage(user);
-        super.newUser(user);
+        if (connection.newUserToServer(user))
+        {
+            return super.newUser(user);
+        } else
+        {
+            return false;
+        }
     }
 
     @Override
