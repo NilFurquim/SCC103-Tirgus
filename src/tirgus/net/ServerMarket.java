@@ -32,7 +32,7 @@ public class ServerMarket extends Market
         super.newProduct(product);
         for (TirgusConnection connection : server.getConnections())
         {
-            connection.newProductMessage(product);
+            connection.sendMessage(new NewProductMessage(product));
         }
 
         return false;

@@ -1,7 +1,5 @@
 package tirgus.net;
 
-import tirgus.model.Product;
-import tirgus.model.User;
 import tirgus.net.message.*;
 
 import java.io.IOException;
@@ -34,19 +32,25 @@ public class TirgusConnection implements Runnable
         inputThread.start();
     }
 
-    public void newProductMessage(Product product)
+    public void sendMessage(TirgusMessage message)
     {
-        sendMessage(new NewProductMessage(product));
+        System.err.println("sent: " + message);
+        writer.println(message);
     }
 
-    public boolean newUserToServer(User user)
+    public ResponseMessage sendMessageAndWait(TirgusMessage message)
     {
-        sendMessage(new NewUserMessage(user));
-        BooleanResponseMessage response = (BooleanResponseMessage) waitForResponse();
+        sendMessage(message);
+        return waitForResponse();
+    }
+
+    public boolean sendMessageAndWaitBoolean(TirgusMessage message)
+    {
+        BooleanResponseMessage response = (BooleanResponseMessage) sendMessageAndWait(message);
         return response != null && response.successful();
     }
 
-    public ResponseMessage waitForResponse()
+    protected ResponseMessage waitForResponse()
     {
         final int timeout = 1000;
         final int step = 50;
@@ -119,13 +123,4 @@ public class TirgusConnection implements Runnable
             e.printStackTrace();
         }
     }
-
-    public void sendMessage(TirgusMessage message)
-    {
-        System.err.println("sent: " + message);
-        writer.println(message);
-    }
 }
-
-
-

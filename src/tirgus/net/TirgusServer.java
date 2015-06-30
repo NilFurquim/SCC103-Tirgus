@@ -2,6 +2,7 @@ package tirgus.net;
 
 import tirgus.app.server.ServerApplication;
 import tirgus.model.Product;
+import tirgus.net.message.NewProductMessage;
 import tirgus.net.message.TirgusMessageCallback;
 
 import java.io.IOException;
@@ -33,21 +34,24 @@ public class TirgusServer implements Runnable
     @Override
     public void run()
     {
-        try
+        boolean isRunning = true;
+        while (isRunning)
         {
-            while (true)
+            try
             {
                 Socket socket = serverSocket.accept();
                 TirgusConnection connection = new TirgusConnection(socket, messageCallback);
                 connections.add(connection);
                 for (Product product : ServerApplication.getMarket().getProducts())
                 {
-                    connection.newProductMessage(product);
+                    connection.sendMessage(new NewProductMessage(product));
                 }
+            } catch (Exception ex)
+            {
+                isRunning = false;
             }
-        } catch (IOException ignored)
-        {
         }
+
     }
 
     public void stop()

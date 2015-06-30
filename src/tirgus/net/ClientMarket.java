@@ -44,7 +44,7 @@ public class ClientMarket extends Market
 
     public boolean newUser(User user)
     {
-        return connection.newUserToServer(user);
+        return connection.sendMessageAndWaitBoolean(new NewUserMessage(user));
     }
 
     @Override
