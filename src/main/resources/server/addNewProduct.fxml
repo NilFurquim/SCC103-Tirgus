@@ -6,7 +6,7 @@
 <GridPane styleClass="container" prefWidth="400" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="tirgus.app.server.AddNewProduct">
     <stylesheets>
-        <URL value="@/tirgus/app/tirgus.css" />
+        <URL value="@/tirgus.css" />
     </stylesheets>
 
     <columnConstraints>

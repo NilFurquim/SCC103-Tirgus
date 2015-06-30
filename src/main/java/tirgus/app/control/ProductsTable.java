@@ -39,7 +39,7 @@ public class ProductsTable extends BorderPane
 
     public ProductsTable() throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("productsTableView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/control/productsTableView.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         loader.load();

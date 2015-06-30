@@ -95,7 +95,7 @@ public class ClientMarket extends Market
 
     public boolean buyProduct(int productId, int quantity)
     {
-        connection.sendMessage(new BuyMessage(productId, quantity));
+        connection.sendMessage(new BuyMessage(productId, quantity, getCurrentUser().getId()));
         BooleanResponseMessage response = (BooleanResponseMessage) connection.waitForResponse();
         return response != null && response.successful();
     }

@@ -34,7 +34,6 @@ public class TirgusConnection implements Runnable
 
     public void sendMessage(TirgusMessage message)
     {
-        System.err.println("sent: " + message);
         writer.println(message);
     }
 
@@ -83,7 +82,6 @@ public class TirgusConnection implements Runnable
 
             Class<? extends TirgusMessage> c = TirgusMessageMapper.instance().getMap().findValue(identifier);
             TirgusMessage message = instantiateMessage(c, body);
-            System.err.println("received: " + message);
             if (message instanceof ResponseMessage)
             {
                 lastResponse = (ResponseMessage) message;

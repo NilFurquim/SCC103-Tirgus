@@ -1,6 +1,5 @@
 package tirgus.app.server;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +32,7 @@ public class AddToStockControl extends GridPane
 
     public AddToStockControl(Product selectedProduct) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/addToStock.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/server/addToStock.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         loader.load();

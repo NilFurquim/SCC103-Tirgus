@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tirgus.model.Product;
+import tirgus.model.Sale;
 import tirgus.model.User;
 import tirgus.net.ServerMarket;
 import tirgus.serialization.CSVSerializer;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -59,10 +61,11 @@ public class ServerApplication extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/server.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/server/server.fxml"));
         primaryStage.setTitle("Tirgus Server");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> market.onCloseRequest());
     }
 
     public static void main(String[] args) throws IOException
@@ -74,6 +77,7 @@ public class ServerApplication extends Application
 
         initialImport("Products.csv", Product.class, products -> market.getProducts().addAll(products));
         initialImport("Users.csv", User.class, users -> market.getUsers().addAll(users));
+        initialImport("Sales.csv", Sale.class, sales -> market.getSales().addAll(sales));
         launch(args);
     }
 

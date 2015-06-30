@@ -31,7 +31,7 @@ public class BuyProductControl extends GridPane
     {
         this.product = product;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/buyProduct.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/buyProduct.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         loader.load();

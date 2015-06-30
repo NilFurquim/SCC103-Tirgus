@@ -15,7 +15,7 @@ public class ClientApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/client.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/client/client.fxml"));
         primaryStage.setTitle("Tirgus Client");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

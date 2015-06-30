@@ -8,21 +8,25 @@ import javafx.scene.control.ButtonType;
 import tirgus.app.server.ServerApplication;
 import tirgus.model.Market;
 import tirgus.model.Product;
+import tirgus.model.Sale;
 import tirgus.model.User;
 import tirgus.net.message.*;
 import tirgus.serialization.CSVSerializer;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class ServerMarket extends Market
 {
     private final ObservableList<User> users;
+    private final ObservableList<Sale> sales;
 
     private TirgusServer server;
     public ServerMarket(int port) throws IOException
     {
         users = FXCollections.observableArrayList();
+        sales = FXCollections.observableArrayList();
         server = new TirgusServer(port, this::serverMessageCallback);
     }
 
@@ -99,6 +103,8 @@ public class ServerMarket extends Market
             if (product.getQuantity() >= m.getQuantity())
             {
                 product.setQuantity(product.getQuantity() - m.getQuantity());
+
+                sales.add(new Sale(LocalDate.now(), m.getUserId(), product.getId(), m.getQuantity()));
                 connection.sendMessage(new BooleanResponseMessage(true));
 
                 for (TirgusConnection conn : server.getConnections())
@@ -145,6 +151,11 @@ public class ServerMarket extends Market
         {
             ServerApplication.closingExport("Products.csv", ServerApplication.getMarket().getProducts());
             ServerApplication.closingExport("Users.csv", ServerApplication.getMarket().getUsers());
+            ServerApplication.closingExport("Sales.csv", ServerApplication.getMarket().getSales());
         }
+    }
+
+    public ObservableList<Sale> getSales() {
+        return sales;
     }
 }

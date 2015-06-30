@@ -8,13 +8,14 @@
 <BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="tirgus.app.server.ServerController">
     <stylesheets>
-        <URL value="@/tirgus/app/tirgus.css" />
+        <URL value="@/tirgus.css" />
     </stylesheets>
 
     <top>
         <ToolBar>
             <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddNewProduct" text="_New Product" />
             <Button focusTraversable="false" mnemonicParsing="true" onAction="#onAddToStock" text="_Add to Stock" />
+            <Button focusTraversable="false" mnemonicParsing="true" onAction="#onPrintPdf" text="_Print to PDF" />
         </ToolBar>
     </top>
 

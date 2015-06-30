@@ -30,7 +30,7 @@ public class ClientController implements Initializable
 
     public void onAddNewUser(ActionEvent actionEvent) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getResource("view/addNewUser.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/client/addNewUser.fxml"));
         Stage stage = new Stage();
         stage.setTitle("New User");
         stage.setScene(new Scene(root));
@@ -40,12 +40,13 @@ public class ClientController implements Initializable
 
     public void onLogin(ActionEvent actionEvent) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/client/login.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Login");
         stage.setScene(new Scene(root));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        productsTable.getProductsTable().getSelectionModel().clearSelection();
     }
 
     public void onBuyProduct(ActionEvent actionEvent) throws IOException

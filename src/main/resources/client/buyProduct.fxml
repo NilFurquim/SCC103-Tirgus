@@ -5,7 +5,7 @@
 <?import java.net.URL?>
 <fx:root type="GridPane" styleClass="container" prefWidth="400" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@/tirgus/app/tirgus.css" />
+        <URL value="@/tirgus.css" />
     </stylesheets>
 
     <columnConstraints>
@@ -26,12 +26,12 @@
     <Label text="Current Quantity" GridPane.rowIndex="1" GridPane.halignment="RIGHT" />
     <TextField fx:id="currentField" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
 
-    <Label text="New Quantity" GridPane.rowIndex="2" GridPane.halignment="RIGHT" />
-    <TextField fx:id="newQuantityField" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"/>
+    <Label text="Price" GridPane.rowIndex="2" GridPane.halignment="RIGHT" />
+    <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"/>
 
-    <Label text="Addition" GridPane.rowIndex="3" GridPane.halignment="RIGHT" />
-    <Spinner fx:id="additionSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label text="Buy" GridPane.rowIndex="3" GridPane.halignment="RIGHT" />
+    <Spinner fx:id="qtdSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     <Button mnemonicParsing="true" text="_Done"  GridPane.halignment="RIGHT"
-            GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#onDone"/>
+            GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#onBuy"/>
 </fx:root>

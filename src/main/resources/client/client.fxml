@@ -7,7 +7,7 @@
 <BorderPane prefHeight="480" prefWidth="854" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tirgus.app.client.ClientController">
     <stylesheets>
-        <URL value="@/tirgus/app/tirgus.css" />
+        <URL value="@/tirgus.css" />
     </stylesheets>
 
     <top>
