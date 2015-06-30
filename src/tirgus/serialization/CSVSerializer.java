@@ -48,6 +48,7 @@ public class CSVSerializer
     public static <T extends OrderedSerializable> T read(String line, Class<T> c)
     {
         //read line and split by commas
+        line = line.trim();
         String[] data = line.split(",\\s");
 
         //return instance of object
