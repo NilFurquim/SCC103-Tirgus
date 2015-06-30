@@ -10,6 +10,9 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test for users
+ */
 public class UserTest {
 
     @Test

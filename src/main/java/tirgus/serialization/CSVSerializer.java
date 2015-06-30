@@ -6,8 +6,17 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * CSV formatted Serializer
+ */
 public class CSVSerializer
 {
+    /**
+     * Write object to output stream
+     * @param object
+     * @param stream
+     * @param <T>
+     */
     public static <T extends OrderedSerializable> void write(T object, OutputStream stream)
     {
         //get object outputdata
@@ -31,6 +40,12 @@ public class CSVSerializer
         writer.flush();
     }
 
+    /**
+     * Write object to string
+     * @param object
+     * @param <T>
+     * @return
+     */
     public static <T extends OrderedSerializable> String write(T object)
     {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -45,6 +60,13 @@ public class CSVSerializer
         return stream.toString();
     }
 
+    /**
+     * Create and initialize object of type from string
+     * @param line
+     * @param c
+     * @param <T>
+     * @return
+     */
     public static <T extends OrderedSerializable> T read(String line, Class<T> c)
     {
         //read line and split by commas
@@ -64,6 +86,14 @@ public class CSVSerializer
         return object;
     }
 
+    /**
+     * Create and initialize object of type from input stream
+     * @param stream
+     * @param c
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
     public static <T extends OrderedSerializable> List<T> read(InputStream stream, Class<T> c) throws IOException
     {
         List<T> items = new ArrayList<>();

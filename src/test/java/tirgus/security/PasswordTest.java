@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test for password encryption
+ */
 public class PasswordTest {
 
     @Test

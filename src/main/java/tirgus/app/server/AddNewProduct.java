@@ -17,6 +17,9 @@ import java.time.Period;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Register product window controller
+ */
 public class AddNewProduct implements Initializable
 {
     @FXML
@@ -49,6 +52,10 @@ public class AddNewProduct implements Initializable
         );
     }
 
+    /**
+     * Register product request
+     * @param actionEvent
+     */
     public void onRegister(ActionEvent actionEvent)
     {
         final String name = nameField.getText();

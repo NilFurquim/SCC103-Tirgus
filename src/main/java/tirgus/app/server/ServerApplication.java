@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Server application
+ */
 public class ServerApplication extends Application
 {
     private static ServerMarket market;
@@ -29,6 +32,12 @@ public class ServerApplication extends Application
         return market;
     }
 
+    /**
+     * Export csv data
+     * @param filename
+     * @param list
+     * @param <T>
+     */
     public static <T extends OrderedSerializable> void closingExport(String filename, List<T> list)
     {
         try {
@@ -44,6 +53,13 @@ public class ServerApplication extends Application
         }
     }
 
+    /**
+     * import csv data
+     * @param filename
+     * @param c
+     * @param consumer
+     * @param <T>
+     */
     public static <T extends OrderedSerializable> void initialImport(String filename, Class<T> c, Consumer<List<T>> consumer)
     {
         File file = new File(filename);

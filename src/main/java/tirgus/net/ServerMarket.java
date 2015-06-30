@@ -17,12 +17,21 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * Server side market
+ */
 public class ServerMarket extends Market
 {
     private final ObservableList<User> users;
     private final ObservableList<Sale> sales;
 
     private TirgusServer server;
+
+    /**
+     * Constructor
+     * @param port
+     * @throws IOException
+     */
     public ServerMarket(int port) throws IOException
     {
         users = FXCollections.observableArrayList();
@@ -30,6 +39,11 @@ public class ServerMarket extends Market
         server = new TirgusServer(port, this::serverMessageCallback);
     }
 
+    /**
+     * Register product
+     * @param product
+     * @return
+     */
     @Override
     public boolean newProduct(Product product)
     {
@@ -42,6 +56,11 @@ public class ServerMarket extends Market
         return false;
     }
 
+    /**
+     * Register user
+     * @param user
+     * @return
+     */
     public boolean newUser(User user)
     {
         boolean alreadyExists = users.stream().anyMatch(user1 -> user1.getLogin().equals(user.getLogin()));
@@ -54,6 +73,27 @@ public class ServerMarket extends Market
         return false;
     }
 
+    /**
+     * Add to stock
+     * @param product
+     * @param addition
+     */
+
+    public void addToStock(Product product, int addition)
+    {
+        product.setQuantity(product.getQuantity() + addition);
+        for (TirgusConnection connection : server.getConnections())
+        {
+            connection.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
+        }
+    }
+
+    /**
+     * callback for messages from client
+     * @param connection
+     * @param message
+     * @return
+     */
     private boolean serverMessageCallback(TirgusConnection connection, TirgusMessage message)
     {
         if (message instanceof NewUserMessage)
@@ -62,12 +102,16 @@ public class ServerMarket extends Market
             boolean success = newUser(m.getUser());
             connection.sendMessage(new BooleanResponseMessage(success));
             return true;
+
+
         } else if (message instanceof NewProductMessage)
         {
             NewProductMessage m = (NewProductMessage) message;
             boolean success = newProduct(m.getProduct());
             connection.sendMessage(new BooleanResponseMessage(success));
             return true;
+
+
         } else if (message instanceof RequestSaltMessage)
         {
             RequestSaltMessage m = (RequestSaltMessage) message;
@@ -79,8 +123,9 @@ public class ServerMarket extends Market
             {
                 connection.sendMessage(new ResponseMessage(filtered.get(0).getPassword().getEncodedSalt()));
             }
-
             return true;
+
+
         } else if (message instanceof LoginMessage)
         {
             LoginMessage m = (LoginMessage) message;
@@ -94,8 +139,9 @@ public class ServerMarket extends Market
             {
                 connection.sendMessage(new ResponseMessage(CSVSerializer.write(list.get(0))));
             }
-
             return true;
+
+
         } else if (message instanceof BuyMessage)
         {
             BuyMessage m = (BuyMessage) message;
@@ -132,15 +178,9 @@ public class ServerMarket extends Market
         return users;
     }
 
-    public void addToStock(Product product, int addition)
-    {
-        product.setQuantity(product.getQuantity() + addition);
-        for (TirgusConnection connection : server.getConnections())
-        {
-            connection.sendMessage(new QuantityMessage(product.getId(), product.getQuantity()));
-        }
-    }
-
+    /**
+     * When closing application
+     */
     public void onCloseRequest()
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

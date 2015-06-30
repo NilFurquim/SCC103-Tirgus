@@ -9,6 +9,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Client-Server connection
+ */
 public class TirgusConnection implements Runnable
 {
     private Thread inputThread;
@@ -20,6 +23,12 @@ public class TirgusConnection implements Runnable
     //TODO some queue and response ID for a multiple responses case
     private ResponseMessage lastResponse;
 
+    /**
+     * Constructor
+     * @param socket
+     * @param messageCallback
+     * @throws IOException
+     */
     public TirgusConnection(Socket socket, TirgusMessageCallback messageCallback) throws IOException
     {
         this.socket = socket;
@@ -32,23 +41,41 @@ public class TirgusConnection implements Runnable
         inputThread.start();
     }
 
+    /**
+     * Send a message that doesnt expect answers
+     * @param message
+     */
     public void sendMessage(TirgusMessage message)
     {
         writer.println(message);
     }
 
+    /**
+     * Send a message that expects answers
+     * @param message
+     * @return
+     */
     public ResponseMessage sendMessageAndWait(TirgusMessage message)
     {
         sendMessage(message);
         return waitForResponse();
     }
 
+    /**
+     * Send a message that expects a boolean answer
+     * @param message
+     * @return
+     */
     public boolean sendMessageAndWaitBoolean(TirgusMessage message)
     {
         BooleanResponseMessage response = (BooleanResponseMessage) sendMessageAndWait(message);
         return response != null && response.successful();
     }
 
+    /**
+     * Wait for answer
+     * @return
+     */
     protected ResponseMessage waitForResponse()
     {
         final int timeout = 1000;
@@ -95,6 +122,12 @@ public class TirgusConnection implements Runnable
         }
     }
 
+    /**
+     * Instantiate message from string
+     * @param c
+     * @param body
+     * @return
+     */
     private TirgusMessage instantiateMessage(Class<? extends TirgusMessage> c, String body)
     {
         try

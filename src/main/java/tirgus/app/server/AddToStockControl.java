@@ -30,6 +30,11 @@ public class AddToStockControl extends GridPane
 
     private Product product;
 
+    /**
+     * Constructor
+     * @param selectedProduct
+     * @throws IOException
+     */
     public AddToStockControl(Product selectedProduct) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/server/addToStock.fxml"));
@@ -50,6 +55,10 @@ public class AddToStockControl extends GridPane
         newQuantityField.setText(String.valueOf(product.getQuantity() + additionSpinner.getValue()));
     }
 
+    /**
+     * Add to stock request
+     * @param actionEvent
+     */
     public void onDone(ActionEvent actionEvent)
     {
 

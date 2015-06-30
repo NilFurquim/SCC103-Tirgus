@@ -9,6 +9,9 @@ import tirgus.net.ClientMarket;
 
 import java.io.IOException;
 
+/**
+ * Client side application
+ */
 public class ClientApplication extends Application {
 
     private static ClientMarket market;

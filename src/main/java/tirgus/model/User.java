@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * User model
+ */
 public class User extends OrderedSerializable
 {
     private String name;
@@ -16,11 +19,17 @@ public class User extends OrderedSerializable
     private String login;
     private Password password;
 
+    /**
+     * Constructor
+     */
     public User()
     {
 
     }
 
+    /**
+     * Constructor
+     */
     public User(String name, String address, String telephone, String email, String login, Password password)
     {
         this.name = name;
@@ -61,6 +70,10 @@ public class User extends OrderedSerializable
         return password;
     }
 
+    /**
+     * Serialize object
+     * @return
+     */
     @Override
     protected List<String> customOutputData()
     {
@@ -75,6 +88,10 @@ public class User extends OrderedSerializable
         );
     }
 
+    /**
+     * Read object values
+     * @param itr
+     */
     @Override
     public void customInputData(Iterator<String> itr)
     {

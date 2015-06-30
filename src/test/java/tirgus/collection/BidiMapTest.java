@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test for bidirectional map
+ */
 public class BidiMapTest {
 
     @Test

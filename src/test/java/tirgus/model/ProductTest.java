@@ -7,6 +7,9 @@ import java.time.Period;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test for products
+ */
 public class ProductTest {
 
     @Test

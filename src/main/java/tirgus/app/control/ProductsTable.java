@@ -14,6 +14,9 @@ import tirgus.model.Product;
 
 import java.io.IOException;
 
+/**
+ * Products table control
+ */
 public class ProductsTable extends BorderPane
 {
     @FXML
@@ -37,6 +40,10 @@ public class ProductsTable extends BorderPane
     @FXML
     private TableColumn<Product, Integer> validityCol;
 
+    /**
+     * Constructor
+     * @throws IOException
+     */
     public ProductsTable() throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/control/productsTableView.fxml"));
@@ -51,6 +58,10 @@ public class ProductsTable extends BorderPane
         validityCol.setCellValueFactory(new PropertyValueFactory<>("validityDescription"));
     }
 
+    /**
+     * Initialize table with market data
+     * @param market
+     */
     public void initData(Market market)
     {
         FilteredList<Product> filteredList = new FilteredList<>(market.getProducts());

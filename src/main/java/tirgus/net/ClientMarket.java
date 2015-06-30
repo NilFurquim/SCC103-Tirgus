@@ -11,17 +11,32 @@ import tirgus.serialization.CSVSerializer;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Client side market
+ */
 public class ClientMarket extends Market
 {
     private SimpleObjectProperty<User> currentUser;
     private TirgusConnection connection;
 
+    /**
+     * Constructor
+     * @param host
+     * @param port
+     * @throws IOException
+     */
     public ClientMarket(String host, int port) throws IOException
     {
         currentUser = new SimpleObjectProperty<>(null);
         connection = new TirgusConnection(new Socket(host, port), this::clientMessageCallback);
     }
 
+    /**
+     * callback for messages from server
+     * @param connection
+     * @param message
+     * @return
+     */
     private boolean clientMessageCallback(TirgusConnection connection, TirgusMessage message)
     {
         if (message instanceof NewProductMessage)
@@ -42,6 +57,11 @@ public class ClientMarket extends Market
         return false;
     }
 
+    /**
+     * Register user
+     * @param user
+     * @return
+     */
     public boolean newUser(User user)
     {
         return connection.sendMessageAndWaitBoolean(new NewUserMessage(user));
@@ -53,6 +73,11 @@ public class ClientMarket extends Market
         connection.stop();
     }
 
+    /**
+     * Request salt for password encryption
+     * @param login
+     * @return
+     */
     public String requestSalt(String login)
     {
         connection.sendMessage(new RequestSaltMessage(login));
@@ -66,6 +91,12 @@ public class ClientMarket extends Market
         return response.getBody();
     }
 
+    /**
+     * Send login data
+     * @param login
+     * @param encryptedPassword
+     * @return
+     */
     public User sendLogin(String login, String encryptedPassword)
     {
         connection.sendMessage(new LoginMessage(login, encryptedPassword));
@@ -76,6 +107,19 @@ public class ClientMarket extends Market
         }
 
         return CSVSerializer.read(response.getBody(), User.class);
+    }
+
+    /**
+     * Buy a product
+     * @param productId
+     * @param quantity
+     * @return
+     */
+    public boolean buyProduct(int productId, int quantity)
+    {
+        connection.sendMessage(new BuyMessage(productId, quantity, getCurrentUser().getId()));
+        BooleanResponseMessage response = (BooleanResponseMessage) connection.waitForResponse();
+        return response != null && response.successful();
     }
 
     public User getCurrentUser()
@@ -91,12 +135,5 @@ public class ClientMarket extends Market
     public void setCurrentUser(User currentUser)
     {
         this.currentUser.set(currentUser);
-    }
-
-    public boolean buyProduct(int productId, int quantity)
-    {
-        connection.sendMessage(new BuyMessage(productId, quantity, getCurrentUser().getId()));
-        BooleanResponseMessage response = (BooleanResponseMessage) connection.waitForResponse();
-        return response != null && response.successful();
     }
 }

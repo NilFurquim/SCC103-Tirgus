@@ -14,6 +14,9 @@ import tirgus.model.Product;
 
 import java.io.IOException;
 
+/**
+ * Make a purchase window controller
+ */
 public class BuyProductControl extends GridPane
 {
     @FXML
@@ -27,6 +30,11 @@ public class BuyProductControl extends GridPane
 
     private Product product;
 
+    /**
+     * Constructor
+     * @param product
+     * @throws IOException
+     */
     public BuyProductControl(Product product) throws IOException
     {
         this.product = product;
@@ -43,6 +51,10 @@ public class BuyProductControl extends GridPane
         qtdSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
     }
 
+    /**
+     * Purchase server request
+     * @param event
+     */
     public void onBuy(ActionEvent event)
     {
         if(ClientApplication.getMarket().buyProduct(product.getId(), qtdSpinner.getValue()))

@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Client window controller
+ */
 public class ClientController implements Initializable
 {
     @FXML
@@ -28,6 +31,11 @@ public class ClientController implements Initializable
     @FXML
     private ProductsTable productsTable;
 
+    /**
+     * Register new user
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onAddNewUser(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("/client/addNewUser.fxml"));
@@ -38,6 +46,11 @@ public class ClientController implements Initializable
         stage.show();
     }
 
+    /**
+     * Log in as user
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onLogin(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("/client/login.fxml"));
@@ -49,6 +62,11 @@ public class ClientController implements Initializable
         productsTable.getProductsTable().getSelectionModel().clearSelection();
     }
 
+    /**
+     * Buy product
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onBuyProduct(ActionEvent actionEvent) throws IOException
     {
 

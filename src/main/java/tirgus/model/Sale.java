@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Sale object for history purposes
+ */
 public class Sale extends OrderedSerializable {
 
     private LocalDate date;
@@ -14,6 +17,9 @@ public class Sale extends OrderedSerializable {
     private int productId;
     private int quantity;
 
+    /**
+     * Constructor
+     */
     public Sale()
     {
         this.date = LocalDate.now();
@@ -22,6 +28,9 @@ public class Sale extends OrderedSerializable {
         this.quantity = 0;
     }
 
+    /**
+     * Constructor
+     */
     public Sale(LocalDate date, int userId, int productId, int quantity) {
         this.date = date;
         this.userId = userId;
@@ -45,6 +54,11 @@ public class Sale extends OrderedSerializable {
         return quantity;
     }
 
+
+    /**
+     * Serialize object
+     * @return
+     */
     @Override
     protected List<String> customOutputData() {
         return Arrays.asList(
@@ -55,6 +69,10 @@ public class Sale extends OrderedSerializable {
         );
     }
 
+    /**
+     * Read object values
+     * @param itr
+     */
     @Override
     public void customInputData(Iterator<String> itr) {
         userId = Integer.parseInt(itr.next());

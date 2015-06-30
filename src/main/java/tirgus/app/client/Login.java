@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import tirgus.model.User;
 import tirgus.security.Password;
 
+/**
+ * Login window controller
+ */
 public class Login
 {
     @FXML
@@ -18,6 +21,10 @@ public class Login
     @FXML
     private PasswordField passwordField;
 
+    /**
+     * Login request
+     * @param actionEvent
+     */
     public void onLogin(ActionEvent actionEvent)
     {
         final String login = loginField.getText();

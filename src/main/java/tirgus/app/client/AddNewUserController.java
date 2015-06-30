@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import tirgus.model.User;
 import tirgus.security.Password;
 
+/**
+ * Register user window controller
+ */
 public class AddNewUserController
 {
     @FXML
@@ -30,6 +33,10 @@ public class AddNewUserController
     @FXML
     private PasswordField passField;
 
+    /**
+     * Registering a new user
+     * @param actionEvent
+     */
     public void onRegister(ActionEvent actionEvent)
     {
         final String name = nameField.getText();

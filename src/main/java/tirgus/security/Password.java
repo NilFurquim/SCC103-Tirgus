@@ -6,6 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * Password encryption
+ */
 public class Password
 {
     private static final int saltSize = 16;
@@ -14,12 +17,19 @@ public class Password
     private String encodedSalt;
     private String encryptedPassword;
 
+    /**
+     * Construction
+     * @param plainPassword
+     */
     public Password(String plainPassword)
     {
         encodedSalt = generateSalt();
         encryptedPassword = encrypt(encodedSalt, plainPassword);
     }
 
+    /**
+     * Construction
+     */
     public Password(String encodedSalt, String password, boolean encrypted)
     {
         this.encodedSalt = encodedSalt;
@@ -32,6 +42,12 @@ public class Password
         }
     }
 
+    /**
+     * Perform encryption
+     * @param encodedSalt
+     * @param plainPassword
+     * @return
+     */
     public static String encrypt(String encodedSalt, String plainPassword)
     {
         String decodedSalt = new String(Base64.getDecoder().decode(encodedSalt));
@@ -52,6 +68,10 @@ public class Password
         return new String(encoder.encode(passBytes));
     }
 
+    /**
+     * Generate salt
+     * @return
+     */
     public static String generateSalt()
     {
         try
