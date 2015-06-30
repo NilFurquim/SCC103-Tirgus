@@ -31,8 +31,8 @@ public class ClientApplication extends Application {
 
     public static void main(String[] args) throws IOException
     {
-        final String host = args[0];
-        final int port = Integer.valueOf(args[1]);
+        final String host = args.length > 0 ? args[0] : "localhost";
+        final int port = args.length > 1? Integer.valueOf(args[1]) : 4537;
 
         //set market type
         market = new ClientMarket(host, port);

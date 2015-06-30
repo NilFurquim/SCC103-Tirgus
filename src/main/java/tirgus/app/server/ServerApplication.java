@@ -86,7 +86,7 @@ public class ServerApplication extends Application
 
     public static void main(String[] args) throws IOException
     {
-        final int port = Integer.valueOf(args[0]);
+        final int port = args.length > 0? Integer.valueOf(args[0]) : 4537;
 
         //set market type
         market = new ServerMarket(port);

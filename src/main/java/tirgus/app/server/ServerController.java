@@ -12,6 +12,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tirgus.app.control.ProductsTable;
+import tirgus.app.io.PDFPrinter;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
