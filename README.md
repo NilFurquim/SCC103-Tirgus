@@ -1,5 +1,6 @@
 # SSC0103 - Tirgus
 Assignment for a class of [Object Oriented Programming][ssc]
+*(requires Java 8u40)
 
 #Compilation
 The project was made entirely inside **Jetbrains IntelliJ IDEA 14**, compiling in there should go without problems, anyway we include ant build files so you can also compile 
@@ -32,3 +33,5 @@ All functionality on both server and client present on the application's toolbar
 2. **JUnit**: We used unit tests in our models, collections and serialization system
 3. **PDF**: We used *Apache PDFBox* to make reports on the history of sales
 4. **Design Pattern**:```tirgus.net.message.TirgusMessageMapper``` is **singleton**
+
+[ssc]:https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=SSC0103
