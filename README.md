@@ -1,6 +1,7 @@
 # SSC0103 - Tirgus
 Assignment for a class of [Object Oriented Programming][ssc]
-*(requires Java 8u40)
+
+*(requires Java 8u40)*
 
 #Compilation
 The project was made entirely inside **Jetbrains IntelliJ IDEA 14**, compiling in there should go without problems, anyway we include ant build files so you can also compile 
