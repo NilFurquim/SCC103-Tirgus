@@ -8,6 +8,11 @@ public class TirgusMessageMapper
 {
     private static TirgusMessageMapper _instance = new TirgusMessageMapper();
 
+    public static TirgusMessageMapper instance()
+    {
+        return _instance;
+    }
+
     static
     {
         Map<String, Class<? extends TirgusMessage>> map = instance().getMap();
@@ -19,11 +24,6 @@ public class TirgusMessageMapper
         map.put("login", LoginMessage.class);
         map.put("buy", BuyMessage.class);
         map.put("quantity", QuantityMessage.class);
-    }
-
-    public static TirgusMessageMapper instance()
-    {
-        return _instance;
     }
 
     private TirgusMessageMapper()

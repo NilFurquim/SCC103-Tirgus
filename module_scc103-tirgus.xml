@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_scc103-tirgus" default="compile.module.scc103-tirgus">
+  <dirname property="module.scc103-tirgus.basedir" file="${ant.file.module_scc103-tirgus}"/>
+  
+  <property name="module.jdk.home.scc103-tirgus" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.scc103-tirgus" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.scc103-tirgus" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.scc103-tirgus" value="-encoding windows-1252 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="scc103-tirgus.output.dir" value="${module.scc103-tirgus.basedir}/target/classes"/>
+  <property name="scc103-tirgus.testoutput.dir" value="${module.scc103-tirgus.basedir}/target/test-classes"/>
+  
+  <path id="scc103-tirgus.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="scc103-tirgus.module.production.classpath">
+    <path refid="${module.jdk.classpath.scc103-tirgus}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/hamcrest-library-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.11.jar"/>
+    <path refid="library.org.apache.pdfbox:pdfbox:1.8.9.classpath"/>
+  </path>
+  
+  <path id="scc103-tirgus.runtime.production.module.classpath">
+    <pathelement location="${scc103-tirgus.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/hamcrest-library-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.11.jar"/>
+    <path refid="library.org.apache.pdfbox:pdfbox:1.8.9.classpath"/>
+  </path>
+  
+  <path id="scc103-tirgus.module.classpath">
+    <path refid="${module.jdk.classpath.scc103-tirgus}"/>
+    <pathelement location="${scc103-tirgus.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/hamcrest-library-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.11.jar"/>
+    <path refid="library.org.apache.pdfbox:pdfbox:1.8.9.classpath"/>
+  </path>
+  
+  <path id="scc103-tirgus.runtime.module.classpath">
+    <pathelement location="${scc103-tirgus.testoutput.dir}"/>
+    <pathelement location="${scc103-tirgus.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/hamcrest-library-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.11.jar"/>
+    <path refid="library.org.apache.pdfbox:pdfbox:1.8.9.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.scc103-tirgus">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.scc103-tirgus">
+    <patternset refid="excluded.from.module.scc103-tirgus"/>
+  </patternset>
+  
+  <path id="scc103-tirgus.module.sourcepath">
+    <dirset dir="${module.scc103-tirgus.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="scc103-tirgus.module.test.sourcepath">
+    <dirset dir="${module.scc103-tirgus.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.scc103-tirgus" depends="compile.module.scc103-tirgus.production,compile.module.scc103-tirgus.tests" description="Compile module SCC103-Tirgus"/>
+  
+  <target name="compile.module.scc103-tirgus.production" depends="register.custom.compilers" description="Compile module SCC103-Tirgus; production classes">
+    <mkdir dir="${scc103-tirgus.output.dir}"/>
+    <javac2 destdir="${scc103-tirgus.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.scc103-tirgus}/javac">
+      <compilerarg line="${compiler.args.scc103-tirgus}"/>
+      <bootclasspath refid="scc103-tirgus.module.bootclasspath"/>
+      <classpath refid="scc103-tirgus.module.production.classpath"/>
+      <src refid="scc103-tirgus.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.scc103-tirgus"/>
+    </javac2>
+    
+    <copy todir="${scc103-tirgus.output.dir}">
+      <fileset dir="${module.scc103-tirgus.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.scc103-tirgus.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.scc103-tirgus.tests" depends="register.custom.compilers,compile.module.scc103-tirgus.production" description="compile module SCC103-Tirgus; test classes" unless="skip.tests">
+    <mkdir dir="${scc103-tirgus.testoutput.dir}"/>
+    <javac2 destdir="${scc103-tirgus.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.scc103-tirgus}/javac">
+      <compilerarg line="${compiler.args.scc103-tirgus}"/>
+      <bootclasspath refid="scc103-tirgus.module.bootclasspath"/>
+      <classpath refid="scc103-tirgus.module.classpath"/>
+      <src refid="scc103-tirgus.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.scc103-tirgus"/>
+    </javac2>
+    
+    <copy todir="${scc103-tirgus.testoutput.dir}">
+      <fileset dir="${module.scc103-tirgus.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.scc103-tirgus" description="cleanup module">
+    <delete dir="${scc103-tirgus.output.dir}"/>
+    <delete dir="${scc103-tirgus.testoutput.dir}"/>
+  </target>
+</project>
